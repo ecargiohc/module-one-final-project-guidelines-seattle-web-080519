@@ -1,5 +1,7 @@
 require_relative '../config/environment'
 
+puts "hello"
 
-
-puts "HELLO WORLD"
+PartyPlanner.welcome
+PartyPlanner.username?
+PartyPlanner.main_menu
