@@ -1,27 +1,34 @@
 require 'faker'
 include Faker 
 
-# User.destroy_all
-# PartyItemList.destroy_all
-# ItemType.destroy_all
-# PartyPlan.destroy_all
-
-def fake_foods
-    10.times do 
-        PartyItemList.create(Faker::Food.dish, "food")
-    end
+10.times do 
+    PartyItemList.create([{
+        item_name: Faker::Food.dish,
+        item_type: "food"
+    }])
 end
+# def fake_foods  
+#     10.times do 
+#         PartyItemList.create(Faker::Food.dish, "food")
+#     end
+# end
 
-def fake_music
-    10.times do
-        PartyItemList.create(Faker::Music.album, "music")
-    end
+10.times do
+    PartyItemList.create([{
+        item_name: Faker::Music.album,
+        item_type: "music"
+    }])
 end
+# def fake_music
+#     10.times do
+#         PartyItemList.create(Faker::Music.album, "music")
+#     end
+# end
 
-fake_foods
-fake_music
+# fake_foods
+# fake_music
 
-puts "Seeds done."
+# puts "Seeds done."
 # kids food
 # kf1 = "fruit wands"
 # kf2 = "sprinkle & white chocolate dipped fruits"

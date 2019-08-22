@@ -75,17 +75,17 @@ def party_sample(party_type_num)
 end
 
 
-# def save_party_option 
-#     puts "Would you like to save this plan? Enter Y/N."
-#     user_input = STDIN.gets.chomp.downcase
-#     if user == "y"
-#         PartyPlan.create(username:["username"], item_name:["items"], party_type:["#{PARTY_TYPE_NUM_line115_catcli}"], item_type:["food or music"])
-#         puts "Saved!"
-#     else
-#         puts "Sending you back to main menu..."
-#         #def main_menu
-#     end
-# end
+def save_party_option 
+    puts "Would you like to save this plan? Enter Y/N."
+    user_input = STDIN.gets.chomp.downcase
+    if user == "y"
+        PartyPlan.create(username:["username"], item_name:["items"], party_type:["#{PARTY_TYPE_NUM_line115_catcli}"], item_type:["food or music"])
+        puts "Saved!"
+    else
+        puts "Sending you back to main menu..."
+        #def main_menu
+    end
+end
 
 # def edit_delete_save_from_own_party_plan #from saved
 #     puts "Which (aspect?) of your party would you like to remove?"
