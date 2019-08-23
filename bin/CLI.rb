@@ -138,7 +138,7 @@ require 'pry'
     def self.main_menu
         i = 0
         while i == 0
-            puts "\nMAIN MENU. \n
+            puts "\nMAIN MENU. \n2
             Select from the following options. \n
             1. View my saved selection \n
             2. Edit my saved selection \n
@@ -155,7 +155,8 @@ require 'pry'
                 puts "Hooray! Party selection is even better now."
                 return_to_main_menu?
             elsif option_num.to_s == "3"
-                party_options
+                i = 1
+                # party_options
             else
                 puts "Incorrect input. Code breaking!!"
             end
@@ -169,10 +170,9 @@ require 'pry'
             input = STDIN.gets.chomp
             exit?(input)
             if input == "7"
-                w = 1
+                main_menu
             end
         end
-        1
     end
 
     def self.view_my_plan
@@ -217,6 +217,7 @@ require 'pry'
         puts "Would you like to edit 1. Food list, or 2. Music list?"
         puts "Enter number of choice:"
         item_type_choice = STDIN.gets.chomp.to_s
+        exit?(item_type_choice)
         if item_type_choice == "2"
             puts b #music
             b[0] 
@@ -224,6 +225,7 @@ require 'pry'
             b[2]
             puts "What is the number of the item you'd like to delete?"
             music_choice = STDIN.gets.chomp.to_s
+            exit?(music_choice)
             if music_choice == "1"
                 b.delete_at(0)
                 puts "The item has been deleted"
@@ -249,9 +251,8 @@ require 'pry'
        party_type_num = 0
      # i = 0
         j = 0
-        food = food_sample
-        music = music_sample
-        binding.pry
+        food = PartyItemList.food_sample
+        music = PartyItemList.music_sample
         while j == 0
             puts "So"
             sleep(1)
@@ -267,26 +268,67 @@ require 'pry'
             puts "3. Casual/intimate \n"
             puts "4. Casual/semi-business \n"
             puts "5. Formal \n "
-            party_type_num = gets.chomp
-            exit?
+            party_type_num = STDIN.gets.chomp.to_s
+            exit?(party_type_num)
             k = 0
             while k == 0 
                 puts "Here are some foods and music that I've thought of."
-                puts "Food: #{food}, \n\ Playlist: #{music}."
+                puts "Food: #{food}, \nPlaylist: #{music}."
                 puts "What would you like to do now?"
                 puts "1. Save the selection \n"
                 #puts "2. Edit before saving \n" 
-                puts "3. Show me another selection"
-                what_to_do = gets.chomp
-                exit?
+                puts "2. Show me another selection"
+                what_to_do = STDIN.gets.chomp.to_s
+                exit?(what_to_do)
                 if what_to_do.to_s == "1"
-                    save_party_option
-                    return_to_party_choices?
-                elsif what_to_do == "2"
+                    puts "Would you like to save this plan? Enter Y/N."
+                    user_input = STDIN.gets.chomp.downcase.to_s
+                    if user_input == "y"
+                        food.each do |f|
+                            PartyPlan.create(username: @@current_user, item_name: f, item_type: "food", party_type: party_type_num)
+                        end
+                        music.each do |m|
+                            PartyPlan.create(username: @@current_user, item_name: m, item_type: "music", party_type: party_type_num)
+                        end
+                        puts "Saved!"
+                        a = return_to_party_choices?
+                        if a == 1
+                            k = 1
+                            j = 1
+                            i = 0
+                        elsif a == 2
+                            k = 1
+                            j = 0
+                            i = 0 
+                        elsif a == 3
+                            k = 0
+                        else 
+                            puts "Incorrect input. Code breaking!!"
+                        end
+                    elsif user_input == "n"
+                        puts " "
+                        a = return_to_party_choices?
+                        if a == 1
+                            k = 1
+                            j = 1
+                            i = 0
+                        elsif a == 2
+                            k = 1
+                            j = 0
+                            i = 0 
+                        elsif a == 3
+                            k = 0
+                        else 
+                            puts "Incorrect input. Code breaking!!"
+                        end
+                    else
+                        puts "Incorrect input. Code breaking!!"
+                    end
+                #elsif what_to_do == "2"
                     #delete array
                     #save to db
                     #return_to_party_choices?
-                elsif what_to_do == "3"
+                elsif what_to_do == "2"
                     k = 0
                 else
                     puts "Incorrect input. Code breaking!!"
@@ -296,41 +338,28 @@ require 'pry'
         main_menu
     end
 
-    def return_to_party_choices?
-        puts "1. I want to go back to my main menu \n2. Hmmm.. I'm thinking of a different party now.\n 3. Another party selections for the same party \n 9. exit (You may enter '9' at any time to exit)"
-        input = gets.chomp
+    def self.return_to_party_choices?
+        puts "1. I want to go back to my main menu \n2. Hmmm.. I'm thinking of a different party now.\n3. Another party selections for the same party \n9. exit (You may enter '9' at any time to exit)"
+        input = STDIN.gets.chomp.to_s
         exit?(input)
         if input.to_s == "1"
-            k = 1
-            j = 1
-            i = 0
+            # k = 1
+            # j = 1
+            # i = 0
+            return 1
         elsif input.to_s == "2"
-            k = 1
-            j = 0
-            i = 0
+            # k = 1
+            # j = 0
+            # i = 0
+            return 2
         elsif input.to_S == "3"
             k = 0
         else
             puts "Incorrect input. Code breaking!!"
         end
     end
-    def self.save_party_option
-        puts "Would you like to save this plan? Enter Y/N."
-        user_input = STDIN.gets.chomp.downcase.to_s
-        if user_input == "y"
-            food.each do |f|
-                PartyPlan.create(username: current_user, item_name: f, item_type: "food", party_type: party_type_num)
-            end
-            music.each do |m|
-                PartyPlan.create(username: current_user, item_name: m, item_type: "music", party_type: party_type_num)
-            end
-            puts "Saved!"
-        elsif user_input == "n"
-            puts " "
-        else
-            puts "Incorrect input. Code breaking!!"
-        end
-    end
+
+
 
 
 end
