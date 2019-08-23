@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 3) do
+ActiveRecord::Schema.define(version: 4) do
 
   create_table "party_item_lists", force: :cascade do |t|
     t.string "item_name"
@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 3) do
   end
 
   create_table "party_plans", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "party_item_list_id"
     t.string  "username"
     t.string  "item_name"
     t.string  "item_type"
@@ -25,7 +27,8 @@ ActiveRecord::Schema.define(version: 3) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
+    t.string "username"
+    t.string "password"
   end
 
 end
