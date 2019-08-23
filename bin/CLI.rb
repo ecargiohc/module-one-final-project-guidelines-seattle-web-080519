@@ -83,7 +83,7 @@ require 'pry'
                         j = 4
                         p = 3
                         k = 1 
-                        current_user = username_input
+                        @@current_user = username_input
                     else
                         puts "\nYour password is incorrect. #{pt} tries left."
                         p += 1
@@ -125,6 +125,7 @@ require 'pry'
             end
         end
         puts "\nAccepted new user!"
+        @@current_user = new_username
         print "Make sure you remember your password" 
         sleep(0.5)
         print "."
@@ -206,48 +207,43 @@ require 'pry'
         users_food.each do |f|
             c << f.item_name
         end
-        food = c.each.with_index { |x, i| d << "#{i+1}. #{x}"} 
+        food = c.each.with_index { |x, i| d << "#{i+1}. #{x}"}
                     puts "Your Food dishes: " + d.join(", ")
-        users_music.each do |m| 
+        users_music.each do |m|
             a << m.item_name
         end
         music = a.each.with_index { |x, i| b << "#{i+1}. #{x}"}
                     puts "Your Music albums: " + b.join(", ")
-        # 1
         # 1. Hysteria, 2. Faith, 3. The Wall
-
-        puts "\nWould you like to edit 1. Food list, or 2. Music list?"
+        puts "Would you like to edit 1. Food list, or 2. Music list?"
         puts "Enter number of choice:"
         item_type_choice = STDIN.gets.chomp.to_s
         exit?(item_type_choice)
-        if item_type_choice == "2"
+        # item_type_choice = STDIN.gets.chomp.to_s
+        if item_type_choice == "1"
+            puts d
+            puts "What is the number of the item you'd like to delete?"
+            food_choice = STDIN.gets.chomp.to_s
+            exit?(food_choice)
+            delete_item_ind = food_choice.to_i - 1
+            d.delete_at(delete_item_ind)
+            puts "The item has been deleted"
+            puts "Your updated list:"
+            puts d
+            # PartyPlan.delete.where(item_name: d[delete_item_ind])
+        elsif item_type_choice == "2"
             puts b #music
-            b[0] 
-            b[1] 
-            b[2]
-            puts "\nWhat is the number of the item you'd like to delete?"
+            puts "What is the number of the item you'd like to delete?"
             music_choice = STDIN.gets.chomp.to_s
             exit?(music_choice)
-            if music_choice == "1"
-                b.delete_at(0)
-                puts "\nThe item has been deleted"
-                puts "Your updated list:\n"
-                puts b
-            elsif music_choice == "2"
-                b.delete_at(1)
-                puts "\nThe item has been deleted"
-                puts "Your updated list:\n"
-                puts b
-            elsif music_choice == "3"
-                b.delete_at(2)
-                puts "\nYour updated list:\n"
-                puts b
-            else
-                puts "\nIncorrect input. Code breaking!!(6)"
-            end
+            delete_item_ind = music_choice.to_i - 1
+            d.delete_at(delete_item_ind)
+            puts "The item has been deleted"
+            puts "Your updated list:"
+            puts b
+            # PartyPlan.delete(item_name: b[delete_item_ind])
         end
     end
-
 
     def self.party_options 
        party_type_num = 0
@@ -302,6 +298,7 @@ require 'pry'
                     user_input = STDIN.gets.chomp.downcase.to_s
                     if user_input == "y"
                         food.each do |f|
+                            # binding.pry
                             PartyPlan.create(username: @@current_user, item_name: f, item_type: "food", party_type: party_type_num)
                         end
                         music.each do |m|
@@ -345,6 +342,7 @@ require 'pry'
                     #delete array
                     #save to db
                     #return_to_party_choices?
+
                 elsif what_to_do == "2"
                     k = 0
                 else
@@ -385,6 +383,10 @@ require 'pry'
         music = PartyItemList.where(item_type: "music").all
         music_names = music.map { |item| item.item_name }
         music_names.sample(3)
+    end
+
+    def edit_array(food, music)
+        food 
     end
 
 end
