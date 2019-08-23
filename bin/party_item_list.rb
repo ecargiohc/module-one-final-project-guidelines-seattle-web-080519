@@ -1,11 +1,13 @@
 class PartyItemList < ActiveRecord::Base
-    # has_many :users, through: :party_plans
+    has_many :users, through: :party_plans
 
-    def food_sample
-        PartyItemList.find_by(item_type: "food").sample(3)
+    def self.food_sample
+        binding.pry
+        PartyItemList.find_by(item_type: "food").rand(3)
+    end
+binding.pry
+    def self.music_sample
+        PartyItemList.find_by(item_type: "music").rand(3)
     end
 
-    def music_sample
-        PartyItemList.find_by(item_type: "music").sample(3)
-    end
 end
