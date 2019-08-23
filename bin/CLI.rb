@@ -13,7 +13,7 @@ require 'pry'
 
     def self.exit?(exit_num)
         if exit_num.to_s == "9"
-            puts "See ya later, alligator."
+            puts "\nSee ya later, alligator."
             sleep(1)
             exit
         end
@@ -39,7 +39,7 @@ require 'pry'
             input1 = STDIN.gets.chomp.downcase
             exit?(input1)
             if input1.to_s == "1"
-                puts "Welcome back, you party animal."
+                puts "\nWelcome back, you party animal."
                 var1 = log_in
                 if var1 == 1 
                     i = 3
@@ -48,18 +48,18 @@ require 'pry'
                 end
                 i += 1
             elsif input1.to_s == "2"
-                puts "Welcome to"
+                puts "\nWelcome to"
                 print "."
                 sleep(0.5)
                 print "."
                 sleep(0.5)
                 puts "."
                 sleep(0.5)
-                puts "the PARTY PLANNER! WOO HOO!"
+                puts "\nthe PARTY PLANNER! WOO HOO!"
                 create_user
                 i = 3
             else
-                puts "Incorrect input. Code breaking!!"
+                puts "\nIncorrect input. Code breaking!!(9)"
             end 
         end
     end
@@ -68,7 +68,7 @@ require 'pry'
         j = 0
         k = 0
         while j < 3 do
-            puts "What was your username again?"
+            puts "\nWhat was your username again?"
             username_input = STDIN.gets.chomp.downcase
             exit?(username_input)
             user_result = User.where(username:username_input)
@@ -76,7 +76,7 @@ require 'pry'
                 p = 0
                 pt = 2
                 while p < 3 do
-                puts "Do verify its you with your password now."
+                puts "\nDo verify its you with your password now."
                 password = STDIN.gets.chomp.downcase
                 exit?(password)
                     if user_result[0]["password"] == password
@@ -85,7 +85,7 @@ require 'pry'
                         k = 1 
                         current_user = username_input
                     else
-                        puts "Your password is incorrect. #{pt} tries left."
+                        puts "\nYour password is incorrect. #{pt} tries left."
                         p += 1
                         j += 1
                         k = 0
@@ -93,7 +93,7 @@ require 'pry'
                     end
                 end
             else
-                puts "I don't think we've ever met before. Never heard of the username."
+                puts "\nI don't think we've ever met before. Never heard of the username."
                 j += 1
                 k = 0
             end 
@@ -103,28 +103,28 @@ require 'pry'
         elsif k == 0
             0
         else
-            puts "Incorrect input. Code breaking!!"
+            puts "\nIncorrect input. Code breaking!!(8)"
         end
     end
     
     def self.create_user
-        puts "Please tell me your username."
+        puts "\nPlease tell me your username."
         i = 1
         while i == 1 do
             new_username = STDIN.gets.chomp.downcase
             exit?(new_username)
             x = User.where(username: new_username)
             if new_username == x
-                puts "I already know someone by that name. Try different username."
+                puts "\nI already know someone by that name. Try different username."
             else
-                puts "Accepted the new username. Please enter your new password."
+                puts "\nAccepted the new username. Please enter your new password."
                 password = STDIN.gets.chomp.downcase
                 exit?(password)
                 User.create(username: new_username, password: password)
                 i = 2
             end
         end
-        puts "Accepted new user!"
+        puts "\nAccepted new user!"
         print "Make sure you remember your password" 
         sleep(0.5)
         print "."
@@ -138,7 +138,7 @@ require 'pry'
     def self.main_menu
         i = 0
         while i == 0
-            puts "\nMAIN MENU. \n2
+            puts "\nMAIN MENU. \n
             Select from the following options. \n
             1. View my saved selection \n
             2. Edit my saved selection \n
@@ -148,24 +148,24 @@ require 'pry'
             exit?(option_num)
             if option_num.to_s == "1"
                 view_my_plan
-                puts "Yay! These are the #{@@current_user}'s party selection!'"
+                puts "\nYay! These are the your party selection!'"
                 return_to_main_menu?
             elsif option_num.to_s == "2"
                 update_my_plan
-                puts "Hooray! Party selection is even better now."
+                puts "\nHooray! Party selection is even better now."
                 return_to_main_menu?
             elsif option_num.to_s == "3"
-                i = 1
-                # party_options
+                # i = 1
+                party_options
             else
-                puts "Incorrect input. Code breaking!!"
+                puts "\nIncorrect input. Code breaking!!(7)"
             end
         end
     end
 
     def self.return_to_main_menu?
         w = 0 
-        puts "7. Main menu 9. exit (You may enter '9' at any time to exit)"
+        puts "\n7. Main menu 9. exit (You may enter '9' at any time to exit)"
         while w == 0
             input = STDIN.gets.chomp
             exit?(input)
@@ -185,12 +185,14 @@ require 'pry'
         users_music.each do |m| 
             a << m.item_name
         end
-        a.each.with_index { |x, i| b << "#{i+1}. #{x}"} 
+        a.each.with_index { |x, i| b << "#{i+1}. #{x}"}
+        puts "\n"
         puts b.join(", ")
         users_food.each do |f|
             c << f.item_name
         end
         c.each.with_index { |x, i| d << "#{i+1}. #{x}"} 
+        puts "\n"   
         puts d.join(", ")
     end
 
@@ -214,7 +216,7 @@ require 'pry'
         # 1
         # 1. Hysteria, 2. Faith, 3. The Wall
 
-        puts "Would you like to edit 1. Food list, or 2. Music list?"
+        puts "\nWould you like to edit 1. Food list, or 2. Music list?"
         puts "Enter number of choice:"
         item_type_choice = STDIN.gets.chomp.to_s
         exit?(item_type_choice)
@@ -223,25 +225,25 @@ require 'pry'
             b[0] 
             b[1] 
             b[2]
-            puts "What is the number of the item you'd like to delete?"
+            puts "\nWhat is the number of the item you'd like to delete?"
             music_choice = STDIN.gets.chomp.to_s
             exit?(music_choice)
             if music_choice == "1"
                 b.delete_at(0)
-                puts "The item has been deleted"
-                puts "Your updated list:"
+                puts "\nThe item has been deleted"
+                puts "Your updated list:\n"
                 puts b
             elsif music_choice == "2"
                 b.delete_at(1)
-                puts "The item has been deleted"
-                puts "Your updated list:"
+                puts "\nThe item has been deleted"
+                puts "Your updated list:\n"
                 puts b
             elsif music_choice == "3"
                 b.delete_at(2)
-                puts "Your updated list:"
+                puts "\nYour updated list:\n"
                 puts b
             else
-                puts "Incorrect input. Code breaking!!"
+                puts "\nIncorrect input. Code breaking!!(6)"
             end
         end
     end
@@ -251,9 +253,16 @@ require 'pry'
        party_type_num = 0
      # i = 0
         j = 0
-        food = PartyItemList.food_sample
-        music = PartyItemList.music_sample
-        while j == 0
+
+        foods = PartyItemList.where(item_type: "food").all
+        food_names = foods.map { |item| item.item_name }
+        food_names.sample(3)
+
+        music = PartyItemList.where(item_type: "music").all
+        music_names = music.map { |item| item.item_name }
+        music_names.sample(3)
+
+        while j < 1
             puts "So"
             sleep(1)
             print "."
@@ -262,26 +271,34 @@ require 'pry'
             sleep(1)
             puts "."
             puts "What kind of party are you thinking about?"
+            sleep(0.5)            
             puts "Here are the choices:"
+            sleep(0.5)
             puts "1. Kids \n"
+            sleep(0.5)
             puts "2. Dance Party \n"
+            sleep(0.5)
             puts "3. Casual/intimate \n"
+            sleep(0.5)
             puts "4. Casual/semi-business \n"
+            sleep(0.5)
             puts "5. Formal \n "
             party_type_num = STDIN.gets.chomp.to_s
             exit?(party_type_num)
             k = 0
             while k == 0 
-                puts "Here are some foods and music that I've thought of."
+                food = food_names.sample(3)
+                music = music_names.sample(3)
+                puts "\nHere are some foods and music that I've thought of."
                 puts "Food: #{food}, \nPlaylist: #{music}."
                 puts "What would you like to do now?"
-                puts "1. Save the selection \n"
+                puts "1. Save or reject the selection \n"
                 #puts "2. Edit before saving \n" 
-                puts "2. Show me another selection"
+                puts "2. Show me another selection\n"
                 what_to_do = STDIN.gets.chomp.to_s
                 exit?(what_to_do)
                 if what_to_do.to_s == "1"
-                    puts "Would you like to save this plan? Enter Y/N."
+                    puts "\nWould you like to save this plan? Enter Y/N."
                     user_input = STDIN.gets.chomp.downcase.to_s
                     if user_input == "y"
                         food.each do |f|
@@ -290,7 +307,7 @@ require 'pry'
                         music.each do |m|
                             PartyPlan.create(username: @@current_user, item_name: m, item_type: "music", party_type: party_type_num)
                         end
-                        puts "Saved!"
+                        puts "\nSaved!"
                         a = return_to_party_choices?
                         if a == 1
                             k = 1
@@ -303,7 +320,7 @@ require 'pry'
                         elsif a == 3
                             k = 0
                         else 
-                            puts "Incorrect input. Code breaking!!"
+                            puts "\nIncorrect input. Code breaking!!(5)"
                         end
                     elsif user_input == "n"
                         puts " "
@@ -319,10 +336,10 @@ require 'pry'
                         elsif a == 3
                             k = 0
                         else 
-                            puts "Incorrect input. Code breaking!!"
+                            puts "\nIncorrect input. Code breaking!!(4)"
                         end
                     else
-                        puts "Incorrect input. Code breaking!!"
+                        puts "\nIncorrect input. Code breaking!!(3)"
                     end
                 #elsif what_to_do == "2"
                     #delete array
@@ -331,15 +348,14 @@ require 'pry'
                 elsif what_to_do == "2"
                     k = 0
                 else
-                    puts "Incorrect input. Code breaking!!"
+                    puts "\nIncorrect input. Code breaking!!(2)"
                 end 
             end
         end
-        main_menu
     end
 
     def self.return_to_party_choices?
-        puts "1. I want to go back to my main menu \n2. Hmmm.. I'm thinking of a different party now.\n3. Another party selections for the same party \n9. exit (You may enter '9' at any time to exit)"
+        puts "\n1. I want to go back to my main menu \n2. Hmmm.. I'm thinking of a different party now.\n3. Another party selections for the same party \n9. exit (You may enter '9' at any time to exit)"
         input = STDIN.gets.chomp.to_s
         exit?(input)
         if input.to_s == "1"
@@ -352,14 +368,23 @@ require 'pry'
             # j = 0
             # i = 0
             return 2
-        elsif input.to_S == "3"
-            k = 0
+        elsif input.to_s == "3"
+            # k = 0
+            return 3
         else
-            puts "Incorrect input. Code breaking!!"
+            puts "\nIncorrect input. Code breaking!!(1)"
         end
     end
 
-
-
+    def self.food_sample
+        foods = PartyItemList.where(item_type: "food").all
+        food_names = foods.map { |item| item.item_name }
+        food_names.sample(3)
+    end
+    def self.music_sample
+        music = PartyItemList.where(item_type: "music").all
+        music_names = music.map { |item| item.item_name }
+        music_names.sample(3)
+    end
 
 end
