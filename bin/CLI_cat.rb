@@ -158,34 +158,71 @@ require 'pry'
             c << f.item_name
         end
         food = c.each.with_index { |x, i| d << "#{i+1}. #{x}"} 
-                    puts d.join(", ")
+                    puts "Your Food dishes: " + d.join(", ")
         users_music.each do |m| 
             a << m.item_name
         end
-        music = a.each.with_index { |x, i| b << "#{i+1}. #{x}"} 
-                    puts b.join(", ")
+        music = a.each.with_index { |x, i| b << "#{i+1}. #{x}"}
+                    puts "Your Music albums: " + b.join(", ")
         # 1
         # 1. Hysteria, 2. Faith, 3. The Wall
-    
-        puts "Would like to edit 1. Food list or 2. Music list?"
+
+        puts "Would you like to edit 1. Food list, or 2. Music list?"
         puts "Enter number of choice:"
-        user_input1 = STDIN.gets.chomp.to_s
-        puts "What is the number of the item you'd like to delete?"
-        user_input2 = STDIN.gets.chomp.to_s
-        puts "Are you sure you want to delete? 1. Delete 2. Look at other samples?"
-            user_input3 = STDIN.gets.chomp.to_s
-            # binding.pry
-            if user_input3 == "1"
-                if user_input2 == "1"
-                    PartyPlan.where(item_name: "- - -")
-                    puts "The item is deleted"
-                elsif user_input2 == "2"
-                    PartyPlan.where(item_name: " ")
-                    puts "The item is deleted"
-                end
-            end
-                #Take user_input1, and take either food array or music array
-                #convert item number to index number
+        item_type_choice = STDIN.gets.chomp.to_s
+        # if item_type_choice == "1"
+        # puts d #food
+        #     d[0]
+        #     d[1]
+        #     d[2]
+        #     puts "What is the number of the item you'd like           to delete?"
+        # food_choice = STDIN.gets.chomp.to_s
+        # elsif food_choice == "1"
+        #     d.delete_at(0)
+        #     puts "The item has been deleted"
+        #     puts "Your updated list:"
+        #     puts d
+        #     #why does it go back to "Hooray!...??"
+        # elsif food_choice == "2"
+        #     d.delete_at(1)
+        #     puts "The item has been deleted"
+        #     puts "Your updated list:"
+        #     puts d
+        # elsif food_choice == "3"
+        #     d.delete_at(2)
+        #     puts "Your updated list:"
+        #     puts d
+        if item_type_choice == "2"
+            puts b #music
+            b[0] 
+            b[1] 
+            b[2]
+            puts "What is the number of the item you'd like to delete?"
+        end
+        music_choice = STDIN.gets.chomp.to_s
+        if music_choice == "1"
+            b.delete_at(0)
+            puts "The item has been deleted"
+            puts "Your updated list:"
+            puts b
+        elsif music_choice == "2"
+            b.delete_at(1)
+            puts "The item has been deleted"
+            puts "Your updated list:"
+            puts b
+        elsif music_choice == "3"
+            b.delete_at(2)
+            puts "Your updated list:"
+            puts b
+        end
+                #Take arr_choice, and take either food array or music array
+                #convert index_number to item_name
+                    # user_input2 == index_number + 1
+                    # index number == user_input2 - 1
+                    # b[index number] 
+                    # = string value of item name
+                    # i can search item_namne on PartyPlan 
+                    # therefore delete the partyplan object wher username is currnet_user
                 #take either array a or c and find the value string
                 #find the value string with the username on the PartyPlan
                 #delete the found item/row
@@ -252,5 +289,4 @@ require 'pry'
             k = 0
         end
     end
-
 end
